@@ -2,6 +2,15 @@ body {
  background: lightblue;
 }
 
+div#field {
+    /* border: solid 1px; */
+    position: absolute;
+    left: 0;
+    top: 50;
+    height: 80%;
+    width: 90%;
+}
+
 div.draggable { 
     /* width: 7em; */
     /* height: 7em; */
