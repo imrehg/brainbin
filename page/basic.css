@@ -1,0 +1,24 @@
+body {
+ background: lightblue;
+}
+
+div.draggable { 
+    /* width: 7em; */
+    /* height: 7em; */
+    font-size: 20px;
+    padding: 0.2em;
+    background: yellow;
+    border: solid 1px;
+    display: inline-block;
+    word-wrap: break-word;
+    max-width: 125px;
+}
+
+#footer {
+    position: fixed;
+    bottom: 0;
+}
+
+textarea#entryfield {
+    font-size: 20px;
+}

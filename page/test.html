@@ -1,0 +1,84 @@
+<html>
+<head>
+<title>Braintorm</title>
+<link rel="stylesheet" href="basic.css" type="text/css" />
+<script src="jquery.min.js" type="text/javascript"></script>
+<script src="jquery-ui.min.js" type="text/javascript"></script>
+
+<script>
+  var numNotes = 0;
+
+  $(function() {
+
+    $('#entryfield').keydown(function(e) {
+      if(e.keyCode == 13) {
+        e.preventDefault(); // Makes no difference
+        $(this).parent().submit(); // Submit form it belongs to
+        $(this).val(""); // clear it
+       }
+    });
+
+    function createNote(data) {
+         // Data: id, offset, text, color
+        div = $("<div id=\""+data['id']+"\" class=\"ui-widget-content draggable note\">"+data['text']+"</div>");
+        div.css("background", '#'+Math.floor(Math.random()*16777215).toString(16));
+        return div;
+    }    
+
+    var noteList = [];
+
+    $("form").submit(function() {
+      var text = $("textarea:first").val();
+      numNotes++;
+      var newId = numNotes;
+      data = {text: text, id: newId};
+      // Do create new notes upon update
+      note = createNote(data);
+      $("#field").append(note);
+      var relativeEl = "#field"
+      var offset = "0 0"
+      if (numNotes > 1) {
+         relativeEl = "#"+(numNotes-1);
+         offset = "20 20";
+      }
+      console.log(relativeEl, offset);
+      note.position({
+          my: "left top",
+          at: "left top",
+          of: relativeEl,
+          offset: offset
+      });
+      note.draggable({
+             stop: function(e) {
+                console.log(e.pageX+' '+e.pageY);
+      	     }
+           });
+      offset = note.offset();
+      console.log("Position: "+offset.left+" "+offset.top);
+      return false;
+    });
+     
+  });
+</script>
+
+</head>
+<body>
+<h2> Header </h2>
+
+<div class="demo" id="field">
+
+<!-- <div id="123" class="ui-widget-content draggable"> -->
+<!-- 	<p>Drag me around</p> -->
+<!-- </div> -->
+
+</div>
+
+<div id="footer">
+  <form action="">
+  <textarea id="entryfield" rows="3" cols="60"></textarea>
+  <!-- <input id="entryfield" type="text" width=300> -->
+  </form>
+</div>
+
+</body>
+</html>
