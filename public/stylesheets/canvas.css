@@ -34,7 +34,26 @@ textarea#entryfield {
 }
 
 #input {
+    width: 100%
 }
 
 #removal {
+}
+
+div.colorselect {
+    float: right;
+    width: 20;
+    height: 20;
+    border: solid 1px;
+    margin: 5px;
+}
+
+div.colorselect#yellow {
+    background: yellow;
+}
+div.colorselect#orange {
+    background: orange;
+}
+div.colorselect#lightgreen {
+    background: lightgreen;
 }

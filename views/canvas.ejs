@@ -82,7 +82,7 @@
       var text = $("textarea:first").val();
       var newId = Math.floor(Math.random()*16777215).toString(16);
       var newPos = {x: now.lastPos.x+20, y: now.lastPos.y+20 };
-      data = {text: text, pos: newPos, color: "yellow"};
+      data = {text: text, pos: newPos, color: color};
       now.addToList(newId, data, newPos);
       return false;
     });
@@ -91,6 +91,15 @@
        now.clearNotes();
        now.clearList();
     });
+
+    var color = "";
+    $(".colorselect").click(function() {
+       var id = $(this).attr("id");
+       $(".colorselect").css("border", "solid 1px");
+       $("#"+id).css("border", "solid 2px");
+       color = id;
+    });
+    $("#yellow").click();
 
     now.clearAll = function() {
        console.log("Should have cleaned");
@@ -122,6 +131,10 @@
     <form action="">
       <textarea id="entryfield" rows="3" cols="60"></textarea>
     </form>
+
+    <div id="lightgreen" class="colorselect"></div>
+    <div id="orange" class="colorselect"></div>
+    <div id="yellow" class="colorselect"></div>
   </div>
 
   <div id="removal">
