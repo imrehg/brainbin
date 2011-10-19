@@ -1,0 +1,11 @@
+{
+  "name":        "brainbin",
+  "version":     "0.0.1",
+  "description": "Brainbin prototype",
+  "dependencies": {
+    "ejs": "0.4.3",
+    "express": "2.4.6",
+    "node-uuid": "1.2.0",
+    "now": "0.7.4"
+  }
+}

@@ -1,9 +1,10 @@
 <html>
 <head>
 <title>Brainbin</title>
-<link rel="stylesheet" href="basic.css" type="text/css" />
-<script src="jquery.min.js" type="text/javascript"></script>
-<script src="jquery-ui.min.js" type="text/javascript"></script>
+<link rel="stylesheet" href="/stylesheets/canvas.css" type="text/css" />
+<link rel="stylesheet" href="/stylesheets/base/jquery.ui.all.css" type="text/css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript"></script>
 
 <script>
   var numNotes = 0;
@@ -18,7 +19,7 @@
        }
     });
 
-
+    $("button").button();
 
     function createNote(data) {
          // Data: id, offset, text, color
@@ -56,14 +57,16 @@
       });
     }
 
-    var noteList = new Array({text: 'Hello', id: 'xyz', pos: {x: 100, y:200}, color: "green"},
-                             {text: 'Mofo', id: 'uvw', pos: {x: 200, y:250}, color: "red"},
-                             {text: '!', id: 'uvw', pos: {x: 250, y:300}, color: "red"});
+    var noteList = new Array();
+    <!-- var noteList = new Array({text: 'Hello', id: 'xyz', pos: {x: 100, y:200}, color: "green"}, -->
+    <!--                          {text: 'Mofo', id: 'uvw', pos: {x: 200, y:250}, color: "red"}, -->
+    <!--                          {text: '!', id: 'uvw', pos: {x: 250, y:300}, color: "red"}); -->
 
 
-    var lastPos = {x: 0, y:0};
+    var lastPos = {x:0, y:0};
 
     $.each(noteList, function () {
+       console.log(this);
        addNote(this, "#field");
        lastPos = this.pos;
     });
@@ -79,21 +82,34 @@
       addNote(data, "#field");
       return false;
     });
+
+    $("button").click(function() {
+       $(".note").remove();
+       notelist = [];
+       lastPos = {x:0, y:0};
+    });
      
   });
 </script>
 
 </head>
 <body>
-<h2> Header </h2>
+<h2> Some title will come here </h2>
 
 <div class="demo" id="field"></div>
 
 <div id="footer">
-  <form action="">
-  <textarea id="entryfield" rows="3" cols="60"></textarea>
-  <!-- <input id="entryfield" type="text" width=300> -->
-  </form>
+
+  <div id="input">
+    <form action="">
+      <textarea id="entryfield" rows="3" cols="60"></textarea>
+    </form>
+  </div>
+
+  <div id="removal">
+    <button>Clear notes</button>
+  </div>
+
 </div>
 
 </body>
