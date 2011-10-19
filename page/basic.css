@@ -21,6 +21,7 @@ div.draggable {
     display: inline-block;
     word-wrap: break-word;
     max-width: 125px;
+    vertical-align: top;
 }
 
 #footer {
