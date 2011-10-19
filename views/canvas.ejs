@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="/stylesheets/base/jquery.ui.all.css" type="text/css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript"></script>
+<script src="/nowjs/now.js" type="text/javascript"></script>
 
 <script>
   var numNotes = 0;
@@ -21,9 +22,9 @@
 
     $("button").button();
 
-    function createNote(data) {
+    function createNote(id, data) {
          // Data: id, offset, text, color
-        div = $("<div id=\""+data['id']+"\" class=\"ui-widget-content draggable note\">"+data['text']+"</div>");
+        div = $("<div id=\""+id+"\" class=\"ui-widget-content draggable note\">"+data['text']+"</div>");
         var bg = ''
         if (data.color) {
            bg = data.color;
@@ -34,8 +35,23 @@
         return div;
     }    
 
-    function addNote(data, parent) {
-      note = createNote(data);
+    now.updateNote = function(id) {
+       console.log("Need to update "+id);
+       data = now.noteList[id];
+       note = $('#'+id);
+       var offset = data.pos.x+" "+data.pos.y;
+       console.log(offset);
+       note.position({
+          my: "left top",
+          at: "left top",
+          of: "#field",
+          offset: offset,
+          collision: "flip"
+      });
+    }
+
+    now.addNote = function(id, data, parent) {
+      note = createNote(id, data);
       $(parent).append(note);
       var offset = data.pos.x+" "+data.pos.y;
       note.draggable({
@@ -43,9 +59,8 @@
              scroll: false,
              stop: function(e) {
                 var pos = $(this).position();
-                lastPos = {x: pos.left, y: pos.top};
-                console.log(lastPos.x+" "+lastPos.y);
-                console.log($(this).parent());
+                var newPos = {x: pos.left, y: pos.top};
+                now.triggerUpdate(id, newPos);
       	     }
            });
       note.position({
@@ -57,38 +72,38 @@
       });
     }
 
-    var noteList = new Array();
-    <!-- var noteList = new Array({text: 'Hello', id: 'xyz', pos: {x: 100, y:200}, color: "green"}, -->
-    <!--                          {text: 'Mofo', id: 'uvw', pos: {x: 200, y:250}, color: "red"}, -->
-    <!--                          {text: '!', id: 'uvw', pos: {x: 250, y:300}, color: "red"}); -->
-
-
-    var lastPos = {x:0, y:0};
-
-    $.each(noteList, function () {
-       console.log(this);
-       addNote(this, "#field");
-       lastPos = this.pos;
-    });
+    now.newNoteNotify = function(id, data) {
+      now.addNote(id, data, '#field');
+    }
 
     $("form").submit(function() {
       var text = $("textarea:first").val();
-      numNotes++;
-      var newId = numNotes;
-      lastPos = {x: lastPos.x+20, y: lastPos.y+20 };
-      console.log('Creating note at '+lastPos.x+" "+lastPos.y);
-
-      data = {text: text, id: newId, pos: lastPos, color: "yellow"};
-      addNote(data, "#field");
+      var newId = Math.floor(Math.random()*16777215).toString(16);
+      var newPos = {x: now.lastPos.x+20, y: now.lastPos.y+20 };
+      data = {text: text, pos: newPos, color: "yellow"};
+      now.addToList(newId, data, newPos);
+      now.addNote(newId, data, "#field");
       return false;
     });
 
     $("button").click(function() {
-       $(".note").remove();
-       notelist = [];
-       lastPos = {x:0, y:0};
+       now.clearNotes();
+       now.clearList();
     });
-     
+
+    now.clearAll = function() {
+       console.log("Should have cleaned");
+       $(".note").remove();
+    }
+
+    // Load notes from server
+    now.ready(function() {
+      for(id in now.noteList) {
+       note = now.noteList[id];
+       now.addNote(id, note, "#field");
+      };
+    });
+
   });
 </script>
 

@@ -17,6 +17,38 @@ app.listen(port, function() {
   console.log("Listening on " + port);
 });
 
+var everyone = require("now").initialize(app);
+
+everyone.now.noteList = new Array();
+everyone.now.noteList['xyz'] = {text: 'Hello', pos: {x: 100, y:200}, color: "green"};
+everyone.now.noteList['yysd'] = {text: 'Mofo', pos: {x: 200, y:250}, color: "red"};
+everyone.now.noteList['asdf'] = {text: ':P', pos: {x: 250, y:300}, color: "red"};
+everyone.now.lastPos = { x: 250, y: 300 };
+
+everyone.now.addToList = function(id, data, newPos) {
+    everyone.now.noteList[id] = data;
+    everyone.now.newNoteNotify(id, data);
+    everyone.now.lastPos = newPos;
+    console.log("added!" + id);
+};
+
+everyone.now.triggerUpdate = function(id, newPos) {
+    everyone.now.lastPos = newPos;
+    everyone.now.noteList[id].pos = newPos;
+    everyone.now.updateNote(id);
+};
+
+everyone.now.clearNotes = function() {
+    everyone.now.clearList();
+    everyone.now.lastPos = {x:0, y:0};
+    everyone.now.clearAll();
+};
+
+everyone.now.clearList = function() {
+    everyone.now.noteList = [];
+};
+
+
 // respond to GET /home
 app.get('/', function(request, response) {
 	    // render the home page
