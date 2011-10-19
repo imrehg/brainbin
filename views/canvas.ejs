@@ -11,6 +11,8 @@
   var numNotes = 0;
 
   $(function() {
+    $('#entryfield').text("waiting for server....");
+    $('#entryfield').attr('disabled', true);
 
     $('#entryfield').keydown(function(e) {
       if(e.keyCode == 13) {
@@ -98,6 +100,8 @@
 
     // Load notes from server
     now.ready(function() {
+      $('#entryfield').val("");
+      $('#entryfield').attr('disabled', false);
       for(id in now.noteList) {
        note = now.noteList[id];
        now.addNote(id, note, "#field");
