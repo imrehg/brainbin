@@ -1,7 +1,6 @@
 require.paths.unshift(__dirname + '/lib');
 
 var express   = require('express');
-var now = require('now');
 var uuid = require('node-uuid');
 
 // create an express webserver
