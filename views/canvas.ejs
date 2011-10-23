@@ -6,11 +6,20 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript"></script>
 <script src="/nowjs/now.js" type="text/javascript"></script>
+<script src="/scripts/jquery-jgrowl.min.js" type="text/javascript"></script>
+<link rel="stylesheet" href="/stylesheets/jquery.jgrowl.css" type="text/css" />
 
 <script>
   var numNotes = 0;
 
   $(function() {
+    $.jGrowl("Enter some text on the bottom of the page and press Enter to create a new \"post-it\".", { sticky: true, header:'Create new note'});
+    $.jGrowl("Click and drag notes around on the screen.", { sticky: true, header:'Reorganize notes'});
+    $.jGrowl("Can choose colour of next note by the little colored squares.", { sticky: true, header: 'Post-it colours'});
+    $.jGrowl("Clicking \"clear all notes\" does exactly what it says.", { sticky: true, header:'Clear notes'});
+    $.jGrowl("Whatever you put here, other visitors of this page will be able to see too.!", { sticky: true, header: 'All public!'});
+    $.jGrowl("Everything is very experimental, many functions don't work or are limiter. This will hopefully improve gradually.", { sticky: true, header: 'Status'});
+
     $('#entryfield').text("waiting for server....");
     $('#entryfield').attr('disabled', true);
 
