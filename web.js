@@ -19,7 +19,7 @@ app.listen(port, function() {
 // Disable websockets, https://github.com/Flotype/now/issues/139
 var everyone = require("now").initialize(app, {socketio: {transports: ['xhr-polling', 'jsonp-polling', 'htmlfile']}});
 
-everyone.now.noteList = new Array();
+everyone.now.noteList = {};
 everyone.now.noteList['xyz'] = {text: 'Hello', pos: {x: 100, y:200}, color: "green"};
 everyone.now.noteList['yysd'] = {text: 'Mofo', pos: {x: 200, y:250}, color: "red"};
 everyone.now.noteList['asdf'] = {text: ':P', pos: {x: 250, y:300}, color: "red"};
